@@ -70,24 +70,24 @@ function ToggleTimer() {
 
     useLayoutEffect(() => {
         setLastMin(prevL => {
-            if (pomodoro - prevL / 2 >= 0)
-                setPMin(pomodoro - prevL / 2);
+            if (pomodoro - prevL >= 0)
+                setPMin(pomodoro - prevL);
             return prevL;
         })
     }, [ pomodoro, mode ]);
 
     useLayoutEffect(() => {
         setLastMin(prevL => {
-            if (shortBreak - prevL / 2 >= 0)
-                setSMin(shortBreak - prevL / 2);
+            if (shortBreak - prevL >= 0)
+                setSMin(shortBreak - prevL);
             return prevL;
         })
     }, [ shortBreak, mode ]);
 
     useLayoutEffect(() => {
         setLastMin(prevL => {
-            if (longBreak - prevL / 2 >= 0)
-                setLMin(longBreak - prevL / 2);
+            if (longBreak - prevL >= 0)
+                setLMin(longBreak - prevL);
             return prevL;
         })
     }, [ longBreak, mode ]);
