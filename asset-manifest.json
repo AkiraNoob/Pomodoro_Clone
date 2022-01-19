@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/Pomodoro_Clone/static/css/main.6be965b4.css",
-    "main.js": "/Pomodoro_Clone/static/js/main.aa08cfa5.js",
+    "main.js": "/Pomodoro_Clone/static/js/main.33e67cc5.js",
     "static/js/787.a30afd7d.chunk.js": "/Pomodoro_Clone/static/js/787.a30afd7d.chunk.js",
     "static/media/Flamante-Round-Book-FFP.ttf": "/Pomodoro_Clone/static/media/Flamante-Round-Book-FFP.2bf5813c47c242c78524.ttf",
     "static/media/Wolf Sans Regular.ttf": "/Pomodoro_Clone/static/media/Wolf Sans Regular.939dc4c61a24851f70c4.ttf",
     "index.html": "/Pomodoro_Clone/index.html",
     "main.6be965b4.css.map": "/Pomodoro_Clone/static/css/main.6be965b4.css.map",
-    "main.aa08cfa5.js.map": "/Pomodoro_Clone/static/js/main.aa08cfa5.js.map",
+    "main.33e67cc5.js.map": "/Pomodoro_Clone/static/js/main.33e67cc5.js.map",
     "787.a30afd7d.chunk.js.map": "/Pomodoro_Clone/static/js/787.a30afd7d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6be965b4.css",
-    "static/js/main.aa08cfa5.js"
+    "static/js/main.33e67cc5.js"
   ]
 }
