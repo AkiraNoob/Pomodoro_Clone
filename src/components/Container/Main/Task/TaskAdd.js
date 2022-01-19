@@ -1,10 +1,9 @@
-import { useContext, useState, useEffect, useRef, useLayoutEffect } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 
 import { SettingContext } from '../../GlobalContext/TimerSetting/context'
 import { TaskContext } from './TaskContext/context'
 import { TaskSelected } from '../../GlobalContext/TimerSetting/context';
-import Feature from '../../Header/Utilities/Feature'
 import TaskInput from './TaskInput';
 import TaskElement from './TaskElement';
 import { CButtonTask } from './TaskComponents';
@@ -15,40 +14,39 @@ import { faCheck, faPlus, faEllipsisV, faPlusCircle } from '@fortawesome/free-so
 import { faTrashAlt, faSave } from '@fortawesome/free-regular-svg-icons';
 import styles from './Task.module.scss'
 
-function TaskAdd()
-{
+function TaskAdd() {
     const [ taskState, taskDispatch ] = useContext(TaskContext);
-    const { taskInput, tasks } = taskState;
+    const { tasks } = taskState;
 
     const [ selected, setSelected ] = useContext(TaskSelected);
 
     const [ periodState ] = useContext(SettingContext);
     const { pomodoro, shortBreak, longBreak, intervalLongBreak } = periodState;
 
-    const [ finish, setFinish ] = useState([]);
+    const [ finish, setFinish ] = useState(() => {
+        const finish = JSON.parse(localStorage.getItem('finish'));
+        return finish || [];
+    });
     const [ addPopsUp, setAddPopsUp ] = useState(false);
     const [ menu, setMenu ] = useState(false);
 
     const menuRef = useRef();
 
-    const estSum = tasks.reduce((sum, { est }, index) =>
-    {
+    const estSum = tasks.reduce((sum, { est }, index) => {
         if (finish.indexOf(index) === -1)
             return sum + (+est);
         else return sum;
     }, 0);
 
-    const actSum = tasks.reduce((sum, { act }, index) =>
-    {
+    const actSum = tasks.reduce((sum, { act }, index) => {
         if (finish.indexOf(index) === -1)
             return sum + (+act);
         else return sum;
     }, 0);
 
 
-    const calc = (estSum, actSum) =>
-    {
-        const currentDate = new Date;
+    const calc = (estSum, actSum) => {
+        const currentDate = new Date();
         let currentHours = currentDate.getHours();
         let currentMinutes = currentDate.getMinutes();
 
@@ -63,74 +61,70 @@ function TaskAdd()
         const finishTime = sum * pomodoro + shortBreakTime * shortBreak + longBreakTime * longBreak;
 
         let result = [];
-        if (currentMinutes + finishTime > 59)
-        {
+        if (currentMinutes + finishTime > 59) {
             const minAdd = Math.trunc((currentMinutes + finishTime) / 60);
             const hoursAdd = minAdd - Math.trunc(minAdd / 24) * 24;
 
             (currentHours + hoursAdd > 23) ? result.push(currentHours + hoursAdd - 24) : result.push(currentHours + hoursAdd);
 
             result.push(currentMinutes + finishTime - 60 * minAdd);
-        } else
-        {
+        } else {
             result.push(currentHours);
             result.push(currentMinutes + finishTime);
         }
-        return result.map(el =>
-        {
+        return result.map(el => {
             if (el < 10)
                 return `0${el}`;
             else return el;
         });
     }
 
-    const handleOnClick = () =>
-    {
+    const handleOnClick = () => {
         setAddPopsUp(!addPopsUp);
     }
 
-    const handleSelect = (index) =>
-    {
+    const handleSelect = (index) => {
+        localStorage.setItem('selected', JSON.stringify(index));
         setSelected(index);
     }
 
-    const handleFinish = (index) =>
-    {
-        if (finish.indexOf(index) >= 0)
-        {
+    const handleFinish = (index) => {
+        if (finish.indexOf(index) >= 0) {
             const newFinish = finish;
             newFinish.splice(finish.indexOf(index), 1);
+            localStorage.setItem('finish', JSON.stringify(newFinish));
             setFinish([ ...newFinish ]);
         }
-        else
-            setFinish(prev => [ ...prev, index ]);
+        else {
+            setFinish(prev => {
+                const newFinish = [ ...prev, index ];
+                localStorage.setItem('finish', JSON.stringify(newFinish));
+                return newFinish;
+            });
+        }
     }
 
-    const handleToggleMenu = () =>
-    {
+    const handleToggleMenu = () => {
         setMenu(!menu);
     }
 
-    useEffect(() =>
-    {
-        window.onclick = () =>
-        {
+    useEffect(() => {
+        window.onclick = () => {
             if (menu)
                 handleToggleMenu();
         };
 
-        return () =>
-        {
+        return () => {
             window.onclick = () => { };
         }
     }, [ menu ]);
 
-    const handleClearAll = () =>
-    {
+    const handleClearAll = () => {
         const confirm = window.confirm('Are you sure you want to delete all tasks?');
-        if (confirm)
-        {
-
+        if (confirm) {
+            localStorage.setItem('tasks', JSON.stringify([]));
+            localStorage.setItem('selected', JSON.stringify(0));
+            localStorage.setItem('finish', JSON.stringify([]));
             taskDispatch(actions.toModifyTask({
                 tasks: [],
                 taskInput: {
@@ -141,15 +135,14 @@ function TaskAdd()
                 }
             }));
             setSelected(0);
-        } else
-        {
+        } else {
             return;
         }
     }
 
-    const handleClearAct = () =>
-    {
+    const handleClearAct = () => {
         const newTasks = tasks.map(({ title, note, est, act }) => ({ title, note, est, act: 0 }));
+        localStorage.setItem('tasks', JSON.stringify(newTasks));
         taskDispatch(actions.toModifyTask({
             tasks: newTasks,
             taskInput: {
@@ -161,9 +154,10 @@ function TaskAdd()
         }));
     }
 
-    const handleClearFinished = () =>
-    {
+    const handleClearFinished = () => {
         const newTasks = tasks.filter(({ act, est }) => act !== est);
+        localStorage.setItem('tasks', JSON.stringify(newTasks));
+        localStorage.setItem('finish', JSON.stringify([]));
         taskDispatch(actions.toModifyTask({
             tasks: newTasks,
             taskInput: {

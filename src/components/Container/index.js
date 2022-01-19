@@ -6,11 +6,9 @@ import PeriodProvider from './GlobalContext/TimerSetting/Provider'
 import TimerProvider from './Main/Timer/TimerContext/Provider'
 import './styles.scss'
 
-function Container()
-{
+function Container() {
     const hrDivRef = useRef();
-    useEffect(() =>
-    {
+    useEffect(() => {
         return () => { }
     }, [ hrDivRef.current ])
 

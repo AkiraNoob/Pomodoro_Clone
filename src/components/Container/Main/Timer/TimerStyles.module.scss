@@ -91,3 +91,55 @@
 
   font-weight: 500;
 }
+
+@media screen and(max-width: 428px) {
+  .timer{
+    min-width: 100%;
+    min-height: auto;
+    padding: 20px 15px 25px;
+    justify-content: space-around;
+    gap: 10px;
+  }
+
+  .toggleTimer{
+    padding: 0 0 10px;
+    height: 65%;
+    gap: 30px;
+  }
+
+  .timePeriods{
+    height: 35%;
+  }
+
+  .showToggleTimer{
+    margin: 0;
+    h1{
+      font-size: 110px;
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .showToggleTimer{
+    h1{
+      font-size: 110px;
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .btnTimePeriods{
+    min-width: 70px;
+    font-size: 14px;
+  }
+  .showToggleTimer{
+    h1{
+      font-size:  90px;
+    }
+  }
+  .btnToggleTimer{
+    min-width: 150px;
+    min-height: 45px;
+    font-size: 19px;
+  }
+}

@@ -7,13 +7,11 @@ const initState = {
         est: 1,
         act: 0
     },
-    tasks: []
+    tasks: JSON.parse(localStorage.getItem('tasks')) || []
 }
 
-function reducer(state, action)
-{
-    switch (action.type)
-    {
+function reducer(state, action) {
+    switch (action.type) {
         case constant.TO_ADD_TASK_INPUT: {
             return {
                 ...action.data
@@ -33,6 +31,9 @@ function reducer(state, action)
             return {
                 ...action.data
             }
+        }
+        default: {
+            throw new Error('Invalid action');
         }
     }
 }

@@ -3,12 +3,10 @@ import clsx from "clsx"
 
 import HomeApp from "./HomeApp"
 import Utilities from "./Utilities"
-import TimerProvider from '../Main/Timer/TimerContext/Provider'
 
 import styles from './HeaderStyles.module.scss'
 
-function Header()
-{
+function Header() {
     return (
         <header className={clsx(styles.header)}>
             <div className={clsx(styles.headerNav)}>
@@ -21,5 +19,4 @@ function Header()
         </header>
     )
 }
-
 export default forwardRef(Header)

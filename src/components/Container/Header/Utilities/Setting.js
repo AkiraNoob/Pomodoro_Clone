@@ -9,57 +9,55 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import styles from '../HeaderStyles.module.scss'
 
-function Setting({ handleClose })
-{
+function Setting({ handleClose }) {
     const [ periodState, periodDispatch ] = useContext(SettingContext);
     const { pomodoro, shortBreak, longBreak, intervalLongBreak, autoStartBreak, autoStartPomodoro } = periodState;
 
 
-    const handleBreak = () =>
-    {
+    const handleBreak = () => {
         periodDispatch(actions.toToggleStartBreak());
     }
 
-    const handlePomodoro = () =>
-    {
+    const handlePomodoro = () => {
         periodDispatch(actions.toToggleStartPomodoro());
     }
 
-    const handleChangePomodoro = (e) =>
-    {
-        if (e.target.value >= 1)
+    const handleChangePomodoro = (e) => {
+        if (e.target.value >= 1) {
+            localStorage.setItem('pomodoro', JSON.stringify(e.target.value))
             periodDispatch(actions.toChangePomodoro(e.target.value))
+        }
     }
 
-    const handleChangeShortBreak = (e) =>
-    {
-        if (e.target.value >= 1)
+    const handleChangeShortBreak = (e) => {
+        if (e.target.value >= 1) {
+            localStorage.setItem('shortBreak', JSON.stringify(e.target.value))
             periodDispatch(actions.toChangeShortBreak(e.target.value))
+        }
     }
 
-    const handleChangeLongBreak = (e) =>
-    {
-        if (e.target.value >= 1)
+    const handleChangeLongBreak = (e) => {
+        if (e.target.value >= 1) {
+            localStorage.setItem('longBreak', JSON.stringify(e.target.value))
             periodDispatch(actions.toChangeLongBreak(e.target.value))
+        }
     }
 
-    const handleChangeIntervalLongBreak = (e) =>
-    {
-        if (e.target.value >= 1)
+    const handleChangeIntervalLongBreak = (e) => {
+        if (e.target.value >= 1) {
+            localStorage.setItem('intervalLongBreak', JSON.stringify(e.target.value))
             periodDispatch(actions.toChangeIntervalLongBreak(e.target.value))
+        }
     }
 
     const divRef = useRef();
 
-    useEffect(() =>
-    {
-        window.onclick = (e) =>
-        {
+    useEffect(() => {
+        window.onclick = (e) => {
             if (e.target == divRef.current)
                 handleClose();
         };
-        return () =>
-        {
+        return () => {
             window.onclick = () => { };
         }
     }, [])

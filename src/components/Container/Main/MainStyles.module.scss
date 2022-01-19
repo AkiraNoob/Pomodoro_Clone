@@ -10,3 +10,11 @@
   min-width: 620px;
   height: 100%;
 }
+
+
+@media screen and (max-width: 428px){
+  .main{
+    min-width: 100%;
+    padding: 0 15px;
+  }
+}

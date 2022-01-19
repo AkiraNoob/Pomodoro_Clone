@@ -2,8 +2,7 @@ import clsx from "clsx"
 
 import styles from './HeaderStyles.module.scss'
 
-function HomeApp()
-{
+function HomeApp() {
     return (
         <a href="#" className={clsx(styles.homeApp)}>
             <img src='https://pomofocus.io/icons/icon-white.png' alt='icon' />

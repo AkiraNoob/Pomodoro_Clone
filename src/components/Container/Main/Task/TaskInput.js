@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef, useLayoutEffect } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import clsx from 'clsx';
 
 import { TaskContext } from './TaskContext/context'
@@ -10,30 +10,25 @@ import { faCaretUp, faCaretDown, faLock } from '@fortawesome/free-solid-svg-icon
 
 import styles from './Task.module.scss'
 
-function TaskInput({ handleClose, addPopsUp })
-{
+function TaskInput({ handleClose }) {
     const [ taskState, taskDispatch ] = useContext(TaskContext);
     const { taskInput, tasks } = taskState;
     const titleRef = useRef();
     const [ isNote, setIsNote ] = useState(false);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         window.scrollTo(0, document.body.scrollHeight);
     }, []);
 
-    const handleInputTitle = (value) =>
-    {
+    const handleInputTitle = (value) => {
         taskDispatch(actions.toAddTaskInput({
             ...taskState,
             taskInput: { ...taskInput, title: value }
         }));
     }
 
-    const handleInputEst = (value) =>
-    {
-        if (value >= 0)
-        {
+    const handleInputEst = (value) => {
+        if (value >= 0) {
             taskDispatch(actions.toAddTaskInput({
                 ...taskState,
                 taskInput: { ...taskInput, est: value }
@@ -41,25 +36,25 @@ function TaskInput({ handleClose, addPopsUp })
         }
     }
 
-    const handleInputNote = (value) =>
-    {
+    const handleInputNote = (value) => {
         taskDispatch(actions.toAddTaskInput({
             ...taskState,
             taskInput: { ...taskInput, note: value }
         }));
     }
 
-    const handleAddTask = async () =>
-    {
-        if (taskInput.title && taskInput.est)
-        {
-            await taskDispatch(actions.toAddTask({
-                tasks: [ ...tasks, {
-                    title: taskInput.title,
-                    note: taskInput.note,
-                    est: taskInput.est,
-                    act: taskInput.act
-                } ],
+    const handleAddTask = () => {
+        if (taskInput.title && taskInput.est) {
+
+            const newTasks = [ ...tasks, {
+                title: taskInput.title,
+                note: taskInput.note,
+                est: taskInput.est,
+                act: taskInput.act
+            } ];
+
+            taskDispatch(actions.toAddTask({
+                tasks: [ ...newTasks ],
                 taskInput: {
                     title: '',
                     note: '',
@@ -68,34 +63,30 @@ function TaskInput({ handleClose, addPopsUp })
                 }
             }));
 
-            if (isNote)
-            {
+            localStorage.setItem('tasks', JSON.stringify(newTasks));
+
+            if (isNote) {
                 handleAddNote();
             }
         }
     }
 
-    const handleAddNote = () =>
-    {
+    const handleAddNote = () => {
         setIsNote(!isNote);
     }
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         titleRef.current.focus();
-        window.onclick = () =>
-        {
+        window.onclick = () => {
             handleClose();
         };
 
-        return () =>
-        {
+        return () => {
             window.onclick = () => { };
         }
     }, [])
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         taskDispatch(actions.toAddTaskInput({
             ...taskState,
             taskInput: { title: '', note: '', est: 1, act: 0 }
@@ -131,8 +122,7 @@ function TaskInput({ handleClose, addPopsUp })
                             handleClick={() => { handleInputEst(+taskInput.est + 1) }}
                             icon={
                                 <FontAwesomeIcon
-                                    onClick={e =>
-                                    {
+                                    onClick={e => {
                                         handleInputEst(+taskInput.est + 1);
                                         e.stopPropagation();
                                     }}
@@ -144,8 +134,7 @@ function TaskInput({ handleClose, addPopsUp })
                             handleClick={() => { handleInputEst(+taskInput.est - 1) }}
                             icon={
                                 <FontAwesomeIcon
-                                    onClick={e =>
-                                    {
+                                    onClick={e => {
                                         handleInputEst(+taskInput.est - 1);
                                         e.stopPropagation();
                                     }}
@@ -170,8 +159,7 @@ function TaskInput({ handleClose, addPopsUp })
                         + Add Note
                     </span>}
                     <span>+ Add Project<FontAwesomeIcon
-                        onClick={e =>
-                        {
+                        onClick={e => {
                             e.stopPropagation();
                         }}
                         icon={faLock}

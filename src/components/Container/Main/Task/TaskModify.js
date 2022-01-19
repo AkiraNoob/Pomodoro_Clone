@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef, useLayoutEffect } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import clsx from 'clsx';
 
 import { TaskSelected } from '../../GlobalContext/TimerSetting/context';
@@ -11,8 +11,7 @@ import { faCaretUp, faCaretDown, faLock } from '@fortawesome/free-solid-svg-icon
 
 import styles from './Task.module.scss'
 
-function TaskModify({ index, handleMountModify })
-{
+function TaskModify({ index, handleMountModify }) {
     const [ taskState, taskDispatch ] = useContext(TaskContext);
     const { taskInput, tasks } = taskState;
 
@@ -21,41 +20,34 @@ function TaskModify({ index, handleMountModify })
     const { title, note, est, act } = tasks[ index ];
 
     const titleRef = useRef();
-    const [ isNote, setIsNote ] = useState(() =>
-    {
+    const [ isNote, setIsNote ] = useState(() => {
         return (tasks[ index ].note) ? true : false;
     });
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         window.scrollTo(0, document.body.scrollHeight);
     }, []);
 
-    const handleAddNote = () =>
-    {
+    const handleAddNote = () => {
         setIsNote(!isNote);
     }
 
-    const handleModifyTitle = (value) =>
-    {
+    const handleModifyTitle = (value) => {
         taskDispatch(actions.toAddTaskInput({
             ...taskState,
             taskInput: { ...taskInput, title: value }
         }));
     }
 
-    const handleModifyNote = (value) =>
-    {
+    const handleModifyNote = (value) => {
         taskDispatch(actions.toAddTaskInput({
             ...taskState,
             taskInput: { ...taskInput, note: value }
         }));
     }
 
-    const handleModifyEst = (value) =>
-    {
-        if (value >= 0)
-        {
+    const handleModifyEst = (value) => {
+        if (value >= 0) {
             taskDispatch(actions.toAddTaskInput({
                 ...taskState,
                 taskInput: { ...taskInput, est: value }
@@ -63,20 +55,18 @@ function TaskModify({ index, handleMountModify })
         }
     }
 
-    const handleModifyAct = (value) =>
-    {
+    const handleModifyAct = (value) => {
         taskDispatch(actions.toAddTaskInput({
             ...taskState,
             taskInput: { ...taskInput, act: value }
         }));
     }
 
-    const handleSubmitModify = () =>
-    {
-        if ((taskInput.est && taskInput.title) && (taskInput.title !== title || taskInput.est !== est || taskInput.note !== note || taskInput.act !== act))
-        {
+    const handleSubmitModify = () => {
+        if ((taskInput.est && taskInput.title) && (taskInput.title !== title || taskInput.est !== est || taskInput.note !== note || taskInput.act !== act)) {
             const newTasks = tasks;
             newTasks.splice(index, 1, taskInput);
+
             taskDispatch(actions.toModifyTask({
                 tasks: newTasks,
                 taskInput: {
@@ -86,29 +76,36 @@ function TaskModify({ index, handleMountModify })
                     act: 0
                 }
             }))
+
+            localStorage.setItem('tasks', JSON.stringify(newTasks));
+
             handleMountModify();
         }
     }
 
-    const handleDeleteTask = () =>
-    {
+    const handleDeleteTask = () => {
         const newTasks = tasks;
         newTasks.splice(index, 1);
-        setSelected(() =>
-        {
-            if (selected > index)
+
+        setSelected(() => {
+            if (selected > index) {
+                localStorage.setItem('selected', JSON.stringify(selected - 1));
                 return selected - 1;
-            else if (selected < index)
+            }
+            else if (selected < index) {
+                localStorage.setItem('selected', JSON.stringify(selected));
                 return selected;
-            else 
-            {
-                if (selected >= newTasks.length)
-                {
+            }
+            else {
+                if (selected >= newTasks.length) {
+                    localStorage.setItem('selected', JSON.stringify(selected - 1));
                     return selected - 1;
                 }
+                localStorage.setItem('selected', JSON.stringify(selected));
                 return selected;
             }
         })
+
         taskDispatch(actions.toDeleteTask({
             tasks: newTasks,
             taskInput: {
@@ -118,33 +115,31 @@ function TaskModify({ index, handleMountModify })
                 act: 0
             }
         }));
+
+        localStorage.setItem('tasks', JSON.stringify(newTasks));
+
         handleMountModify();
     }
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         titleRef.current.focus();
-        window.onclick = () =>
-        {
+        window.onclick = () => {
             if (window.confirm('The change will be lost. Are you sure you want to close it?'))
                 handleMountModify();
         };
 
-        return () =>
-        {
+        return () => {
             window.onclick = () => { };
         }
     }, [])
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         taskDispatch(actions.toAddTaskInput({
             ...taskState,
             taskInput: { title, note, est, act }
         }));
 
-        return () =>
-        {
+        return () => {
             taskDispatch(actions.toAddTaskInput({
                 ...taskState,
                 taskInput: { title: '', note: '', est: 1, act: 0 }
@@ -186,8 +181,7 @@ function TaskModify({ index, handleMountModify })
                             handleClick={() => { handleModifyEst(+taskInput.est + 1) }}
                             icon={
                                 <FontAwesomeIcon
-                                    onClick={e =>
-                                    {
+                                    onClick={e => {
                                         handleModifyEst(+taskInput.est + 1);
                                         e.stopPropagation();
                                     }}
@@ -199,8 +193,7 @@ function TaskModify({ index, handleMountModify })
                             handleClick={() => { handleModifyEst(+taskInput.est - 1) }}
                             icon={
                                 <FontAwesomeIcon
-                                    onClick={e =>
-                                    {
+                                    onClick={e => {
                                         handleModifyEst(+taskInput.est - 1);
                                         e.stopPropagation();
                                     }}
@@ -226,8 +219,7 @@ function TaskModify({ index, handleMountModify })
                         + Add Note
                     </span>}
                     <span>+ Add Project<FontAwesomeIcon
-                        onClick={e =>
-                        {
+                        onClick={e => {
                             e.stopPropagation();
                         }}
                         icon={faLock}

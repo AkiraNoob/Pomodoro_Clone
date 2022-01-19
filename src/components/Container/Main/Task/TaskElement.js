@@ -12,8 +12,7 @@ import styles from './Task.module.scss'
 import * as actions from './TaskContext/action'
 import * as timerActions from "../Timer/TimerContext/action"
 
-function TaskElement({ index, handleSelect, selected, handleFinish, hasFinished, handleClose, addPopsUp })
-{
+function TaskElement({ index, handleSelect, selected, handleFinish, hasFinished, handleClose, addPopsUp }) {
     const [ taskState, taskDispatch ] = useContext(TaskContext);
     const { taskInput, tasks } = taskState;
 
@@ -24,17 +23,13 @@ function TaskElement({ index, handleSelect, selected, handleFinish, hasFinished,
 
     const [ modify, setModify ] = useState(false);
 
-    const handleMountModify = () =>
-    {
+    const handleMountModify = () => {
         setModify(!modify);
     }
 
-    useEffect(() =>
-    {
-        if (selected && mode !== 'pomodoro' && click === 'auto')
-        {
-            if (+act + 1 < +est)
-            {
+    useEffect(() => {
+        if (selected && mode !== 'pomodoro' && click === 'auto') {
+            if (+act + 1 < +est) {
                 timerDispatch(timerActions.toChangeInTask(true));
                 const newAct = +act + 1;
                 const newTasks = tasks;
@@ -44,8 +39,7 @@ function TaskElement({ index, handleSelect, selected, handleFinish, hasFinished,
                     taskInput,
                     tasks: newTasks
                 }));
-            } else if (+act + 1 === +est)
-            {
+            } else if (+act + 1 === +est) {
                 const newAct = +act + 1;
                 const newTasks = tasks;
                 newTasks[ index ].act = newAct + "";
@@ -58,7 +52,6 @@ function TaskElement({ index, handleSelect, selected, handleFinish, hasFinished,
                 }))
             }
         }
-        console.log(mode, start, click);
     }, [ mode ])
 
     return (
@@ -85,8 +78,7 @@ function TaskElement({ index, handleSelect, selected, handleFinish, hasFinished,
                         {title}
                     </h4>
                     <p>{act}<span>/ {est}</span></p>
-                    <button onClick={(e) =>
-                    {
+                    <button onClick={(e) => {
                         if (addPopsUp)
                             handleClose();
                         else

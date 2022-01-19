@@ -355,3 +355,59 @@
     }
   }
 }
+
+@media screen and (max-width: 428px) {
+  .header{
+    padding: 0 15px;
+      &Nav{
+          min-width: 100%;
+      }
+      &HrDiv{
+        min-width: 100%;
+      }
+  }
+
+  .utilities {
+    &Btn{
+      min-width: 40px;
+      span{
+        display: none;
+      }
+    }
+  }
+
+  .feature {
+    &DisableBg {
+      padding: 0 15px;
+    }
+  }
+
+  .setting {
+   min-width: 100%; 
+  }
+}
+
+@media screen and (max-width: 374px ) {
+  .homeApp{
+    h1{
+      font-size: 17px;
+    }
+
+    img{
+      width: 17px;
+      height: 17px;
+    }
+  }
+
+  .utilities{
+    &Btn{
+      min-width: auto;
+      min-height: auto;
+      padding: 7px 10px;
+    }
+
+    &Icon{
+      font-size: 13px;
+    }
+  }
+}

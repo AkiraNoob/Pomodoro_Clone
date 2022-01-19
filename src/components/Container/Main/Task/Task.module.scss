@@ -598,3 +598,42 @@
     font-family: "Manrope", sans-serif;
   }
 }
+
+
+@media screen and (max-width: 428px) {
+  .task{
+    min-width: 100%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .taskAddToggle{
+    button{
+      height: 55px;
+      
+      svg{
+        font-size: 19px;
+      }
+
+      span{
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 320px){
+  .taskAddToggle{
+    button{
+      height: 50px;
+      
+      svg{
+        font-size: 17px;
+      }
+
+      span{
+        font-size: 13px;
+      }
+    }
+  }
+}
