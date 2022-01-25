@@ -3,6 +3,8 @@ Please tell me if it has any bugs at my email address: narutoducphuong76@gmail.c
 I commit this cloned website only use for personal purpose, not commercial.
 Thanks a lot, enjoy and have fun!
 
-*Note:
- - in src/index.js, not include React.StrictMode
- - this is my first project with React so state management is really bad :DDD
+\*Note:
+
+- in src/index.js, not include React.StrictMode
+- this is my first project with React so state management is really bad :DDD
+- this is none responsive wweb
