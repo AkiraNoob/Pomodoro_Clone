@@ -17,7 +17,7 @@ function Button({ mainId, spanId, handleOnClick, className, icon, content }) {
 
         if (mode === 'pomodoro') {
             id.addEventListener('mouseout', () => handleHoverColor('#fff', iconId, spanId))
-            id.addEventListener('mouseover', () => handleHoverColor('#d95550', iconId, spanId))
+            id.addEventListener('mouseover', () => handleHoverColor('#3b9cc9', iconId, spanId))
         } else if (mode === 'short break') {
             id.addEventListener('mouseout', () => handleHoverColor('#fff', iconId, spanId))
             id.addEventListener('mouseover', () => handleHoverColor('#4c9195', iconId, spanId))

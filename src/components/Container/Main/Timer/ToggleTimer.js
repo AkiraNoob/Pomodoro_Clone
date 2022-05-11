@@ -53,7 +53,7 @@ function ToggleTimer() {
     }
 
     useLayoutEffect(() => {
-        btnRef.current.style.color = (mode === 'pomodoro') ? '#d95550' : (mode === 'short break') ? '#4c9195' : '#457ca3';
+        btnRef.current.style.color = (mode === 'pomodoro') ? '#3b9cc9' : (mode === 'short break') ? '#4c9195' : '#457ca3';
         setSec(0);
         setLastMin(0);
         document.getElementById('hrDiv').style.width = '0%';

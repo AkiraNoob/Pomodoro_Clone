@@ -13,7 +13,7 @@ function Feature({ times, handleClose })
         const popUp = document.getElementById('popUp');
         if (mode === 'pomodoro')
         {
-            popUp.style.color = '#d95550';
+            popUp.style.color = '#3b9cc9';
         }
         if (mode === 'short break')
         {

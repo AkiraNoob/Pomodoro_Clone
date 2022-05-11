@@ -6,7 +6,7 @@ function HomeApp() {
     return (
         <a href="#" className={clsx(styles.homeApp)}>
             <img src='https://pomofocus.io/icons/icon-white.png' alt='icon' />
-            <h1>Pomofocus</h1>
+            <h1>Pomodoro Day</h1>
         </a>
     )
 }

@@ -13,7 +13,7 @@ function TimePeriods() {
 
   useLayoutEffect(() => {
     if (mode === "pomodoro") {
-      document.body.style.backgroundColor = "#d95550";
+      document.body.style.backgroundColor = "#3b9cc9";
     }
     if (mode === "short break") {
       document.body.style.backgroundColor = "#4c9195";
@@ -34,7 +34,7 @@ function TimePeriods() {
       }
     }
     if (modeActive === "pomodoro")
-      document.body.style.backgroundColor = "#d95550";
+      document.body.style.backgroundColor = "#3b9cc9";
     if (modeActive === "short break")
       document.body.style.backgroundColor = "#4c9195";
     if (modeActive === "long break")
